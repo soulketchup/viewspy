@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <style>
+        * {box-sizing:border-box;}
+        html, body {margin:0;padding:0;}
+
+        .container {max-width:400px;margin:0 auto;}
+        .box1 {height:600px;margin:50px 0;outline:solid 10px rgba(0,0,0,.3);}
+        .box2 {height:300px;overflow:auto;padding:0 20px;}
+        .box2 .box1 {outline:solid 5px #000;}
+        #item {background:yellow;}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="box1">
+            box1
+        </div>
+        <div class="box1">
+            box2
+        </div>
+        <div class="box1 box2" id="box">
+            <div class="box1" id="item">
+                box3-2#item
+            </div>
+            <div class="box1">
+                box3-3
+            </div>
+        </div>
+        <div class="box1" id="box2">
+            box4
+        </div>
+        <div class="box1">
+            box5
+        </div>
+    </div>
+
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js'></script>
+    <script src='../jquery.viewspy.js'></script>
+    <script>
+        $('#item')
+            .viewspy({
+                root: '#box'
+            })
+            .on('viewspy', function (e, data, options) {
+                $.attr(this, 'data-ratio', data.ratio);
+                if (data.state) console.log('#item', data.state, data.reverse);
+            });
+
+        $('#box')
+            .viewspy()
+            .on('viewspy', function (e, data, options) {
+                $.attr(this, 'data-ratio', data.ratio);
+                if (data.state) console.log('#box', data.state, data.reverse);
+            });
+    </script>
+</body>
+</html>
